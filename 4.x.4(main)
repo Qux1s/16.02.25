@@ -1,0 +1,68 @@
+#include <iostream>
+#include <limits>
+#include "Header.h"
+
+double userPrintHeightTower();
+void ignoreLine();
+void PrintBallHeight(double userHeight);
+bool ballAboveZero(double userHeight, int flighTime);
+double currentHeightBall(double userHeight, int flighTime);
+
+int main()
+{
+	
+	PrintBallHeight(userPrintHeightTower());
+}
+
+double userPrintHeightTower()
+{
+	std::cout << "Enter the height of the tower in meters: ";
+
+	while (true)
+	{
+
+		double userHeight{};
+
+		std::cin >> userHeight;
+
+
+		if (!std::cin.fail())
+		{
+			ignoreLine();
+
+			return userHeight;
+		}
+		else
+		{
+			std::cin.clear();
+
+			ignoreLine();
+
+			std::cout << "Oops, that input is invalid.  Please try again.\n";
+		}
+	}
+}
+
+void ignoreLine()
+{
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+void PrintBallHeight(double userHeight)
+{
+	std::cout << "111111 ";
+	for (int flighTime{ 0 }; ballAboveZero(userHeight, flighTime); ++flighTime)
+		std::cout << "At " << flighTime << "seconds, the ball is at height : " << currentHeightBall(userHeight, flighTime) << " meters" << '\n';
+
+	std::cout << "333333 ";
+}
+
+bool ballAboveZero(double userHeight, int flighTime)
+{
+	return userHeight - ((constants::gravityPlanetEarth * flighTime * flighTime) / 2)<=0;
+}
+
+double currentHeightBall(double userHeight, int flighTime)
+{
+	return userHeight - ((constants::gravityPlanetEarth * flighTime * flighTime) / 2);
+}
