@@ -1,0 +1,132 @@
+#include <iostream>
+#include <limits>
+
+void calculator();
+double userPrintNumber();
+char userPrintOperation();
+void printResult(double, double, char);
+bool isContinue();
+void ignoreLine();
+
+int main()
+
+{
+
+	calculator();
+
+}
+
+void calculator()
+{
+
+	do
+	{
+		std::cout << "Enter a first value: ";
+
+		double userNumberOne{ userPrintNumber() };
+
+		std::cout << "Enter a second value: ";
+
+		double userNumberTwo{ userPrintNumber() };
+
+		char userOperation{ userPrintOperation() };
+
+		printResult(userNumberOne, userNumberTwo, userOperation);
+
+	} while (isContinue());
+
+}
+
+double userPrintNumber()
+
+{
+
+	while (true)
+	{
+
+		double userFirst{};
+
+		std::cin >> userFirst;
+
+
+		if (!std::cin.fail())
+		{
+			ignoreLine();
+
+			return userFirst;
+		}
+		else
+		{
+			std::cin.clear();
+
+			ignoreLine();
+
+			std::cout << "Oops, that input is invalid.  Please try again.\n";
+		}
+	}
+
+}
+
+char userPrintOperation()
+
+{
+	while (true)
+	{
+		std::cout << "Enter one of the following: +, -, *, or /: ";
+
+		char operation{};
+
+		std::cin >> operation;
+
+		ignoreLine();
+
+		switch (operation)
+		{
+		case '+':
+		case '-':
+		case '*':
+		case '/':
+			return operation;
+		default:
+			std::cout << "Oops, that input is invalid.  Please try again.\n";
+		}
+	}
+}
+
+void printResult(double userFirst, double userSecond, char userOperation)
+
+{
+	switch (userOperation)
+	{
+	case '+':
+		std::cout << userFirst << " + " << userSecond << " is " << userFirst + userSecond << '\n';
+		break;
+	case '-':
+		std::cout << userFirst << " - " << userSecond << " is " << userFirst - userSecond << '\n';
+		break;
+	case '*':
+		std::cout << userFirst << " * " << userSecond << " is " << userFirst * userSecond << '\n';
+		break;
+	case '/':
+		std::cout << userFirst << " / " << userSecond << " is " << userFirst / userSecond << '\n';
+		break;
+	default:
+		std::cerr << "Something went wrong: printResult() got an invalid operator.\n";
+	}
+}
+
+bool isContinue()
+{
+	std::cout << "Enter 'y' to continue or n to stop: ";
+
+	char userResult{};
+
+	std::cin >> userResult;
+
+	return userResult == 'y';
+}
+
+void ignoreLine()
+{
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
